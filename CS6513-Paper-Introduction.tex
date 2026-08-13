@@ -1,0 +1,54 @@
+% This is the first rough structure for my conference paper.
+% I used the official IEEE Conference Template on Overleaf as a guide
+% when deciding on the initial layout and structure of this file.
+% NB ** Final paper must use the IEEE conference format and be exactly 2 pages.
+
+\documentclass[conference]{IEEEtran}
+
+\usepackage{cite}
+
+\title{Closing the Coverage Gap with AI: AI-Assisted Code Coverage Management for Embedded C Software}
+
+\author{
+\IEEEauthorblockN{Dara Heaphy}
+\IEEEauthorblockA{
+University of Limerick\\
+Limerick, Ireland
+}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+% Going to start broad here.
+% Briefly introduce embedded software testing, code coverage,
+% and why improving coverage feedback could be useful.
+
+% Mini literature review.
+% I want to group the papers by idea rather than go through them one by one.
+% Main areas:
+% - LLM-based test generation
+% - coverage-guided feedback
+% - static/program analysis
+% - embedded C testing, mocks and stubs
+
+% Research gap.
+% The main idea at the moment is that most LLM testing work is not focused
+% on embedded C, while embedded testing research does not really look at
+% AI-assisted explanation of coverage gaps and suggested tests/mocks/stubs.
+
+% My contribution.
+% Explain the main research question and briefly describe the approach:
+% baseline coverage -> AI analysis -> review suggestions -> run selected
+% changes -> compare coverage and assess whether the suggestions were useful.
+
+% Finish with a short paper roadmap once the rest of the paper structure
+% is properly decided.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
