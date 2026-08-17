@@ -3,11 +3,15 @@
 % when deciding on the initial layout and structure of this file.
 % NB ** Final paper must use the IEEE conference format and be exactly 2 pages.
 
+
 \documentclass[conference]{IEEEtran}
+
 
 \usepackage{cite}
 
+
 \title{Closing the Coverage Gap with AI: AI-Assisted Code Coverage Management for Embedded C Software}
+
 
 \author{
 \IEEEauthorblockN{Dara Heaphy}
@@ -17,15 +21,33 @@ Limerick, Ireland
 }
 }
 
+
 \begin{document}
+
 
 \maketitle
 
+
 \section{Introduction}
+
 
 % Going to start broad here.
 % Briefly introduce embedded software testing, code coverage,
 % and why improving coverage feedback could be useful.
+
+Embedded software is used in systems where reliable behaviour is often
+important, which makes testing a major part of the development process.
+Code coverage is commonly used to show which parts of a program have or
+have not been exercised by a test suite, but a coverage report on its own
+does not explain why code remains uncovered or what should be done next.
+This can be particularly difficult in embedded C, where hardware
+dependencies, peripheral interactions, timing behaviour, and the need for
+mocks or stubs can make certain paths harder to test. With large language
+models now being explored for software testing and test generation, there
+may be an opportunity to make this part of the coverage process more useful
+by using AI to help explain uncovered code and suggest possible ways of
+exercising it.
+
 
 % Mini literature review.
 % I want to group the papers by idea rather than go through them one by one.
@@ -35,20 +57,25 @@ Limerick, Ireland
 % - static/program analysis
 % - embedded C testing, mocks and stubs
 
+
 % Research gap.
 % The main idea at the moment is that most LLM testing work is not focused
 % on embedded C, while embedded testing research does not really look at
 % AI-assisted explanation of coverage gaps and suggested tests/mocks/stubs.
+
 
 % My contribution.
 % Explain the main research question and briefly describe the approach:
 % baseline coverage -> AI analysis -> review suggestions -> run selected
 % changes -> compare coverage and assess whether the suggestions were useful.
 
+
 % Finish with a short paper roadmap once the rest of the paper structure
 % is properly decided.
 
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+
 
 \end{document}
