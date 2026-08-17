@@ -4,13 +4,17 @@
 % NB ** Final paper must use the IEEE conference format and be exactly 2 pages.
 
 
+
 \documentclass[conference]{IEEEtran}
+
 
 
 \usepackage{cite}
 
 
+
 \title{Closing the Coverage Gap with AI: AI-Assisted Code Coverage Management for Embedded C Software}
+
 
 
 \author{
@@ -22,18 +26,23 @@ Limerick, Ireland
 }
 
 
+
 \begin{document}
+
 
 
 \maketitle
 
 
+
 \section{Introduction}
+
 
 
 % Going to start broad here.
 % Briefly introduce embedded software testing, code coverage,
 % and why improving coverage feedback could be useful.
+
 
 Embedded software is used in systems where reliable behaviour is often
 important, which makes testing a major part of the development process.
@@ -49,6 +58,7 @@ by using AI to help explain uncovered code and suggest possible ways of
 exercising it.
 
 
+
 % Mini literature review.
 % I want to group the papers by idea rather than go through them one by one.
 % Main areas:
@@ -58,10 +68,26 @@ exercising it.
 % - embedded C testing, mocks and stubs
 
 
+Recent work such as CoverUp, Panta, and SymPrompt has shown that LLM-based
+test generation can be improved by using coverage feedback, program analysis,
+and path-specific context \cite{pizzorno2025,gu2026,ryan2024}. However, these
+approaches are mainly evaluated outside embedded C. Existing embedded testing
+work such as SmartUnit and CTGEN already deals with automated testing, C code,
+and the use of stubs \cite{zhang2018,mangels2012}, but does not focus on using
+AI to explain unresolved coverage gaps and suggest practical tests, mocks, or
+stubs. My current aim is therefore to investigate whether an AI-assisted
+feedback step can make embedded-C coverage reports more actionable, while
+still manually checking whether any suggested changes are technically correct
+and genuinely useful rather than relying on coverage improvement alone
+\cite{inozemtseva2014}.
+
+
+
 % Research gap.
 % The main idea at the moment is that most LLM testing work is not focused
 % on embedded C, while embedded testing research does not really look at
 % AI-assisted explanation of coverage gaps and suggested tests/mocks/stubs.
+
 
 
 % My contribution.
@@ -70,12 +96,15 @@ exercising it.
 % changes -> compare coverage and assess whether the suggestions were useful.
 
 
+
 % Finish with a short paper roadmap once the rest of the paper structure
 % is properly decided.
 
 
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+
 
 
 \end{document}
