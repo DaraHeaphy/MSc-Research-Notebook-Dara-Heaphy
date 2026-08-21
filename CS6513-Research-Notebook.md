@@ -53,61 +53,61 @@ I selected the following literature because it helps me understand the main part
 ### First Focused Literature Review - Ten Core Starting Papers (06/08/2026)
 
 #### CoverUp - Pizzorno and Berger (2025)
-- **Citation:** J. A. Pizzorno and E. D. Berger, "CoverUp: Effective High Coverage Test Generation for Python," *Proceedings of the ACM on Software Engineering*, vol. 2, FSE, Art. FSE128, 2025, doi: [10.1145/3729398](https://doi.org/10.1145/3729398).
+- **Citation:** J. A. Pizzorno and E. D. Berger, "CoverUp: Effective High Coverage Test Generation for Python," **Proceedings of the ACM on Software Engineering**, vol. 2, FSE, Art. FSE128, 2025, doi: [10.1145/3729398](https://doi.org/10.1145/3729398).
 - **Why I selected it:** I selected CoverUp because it closely matches my intended feedback loop: use coverage to locate uncovered code, prompt an LLM with targeted context, run the generated tests, and iterate.
 - **Strengths and limitations I noted:** I found its workflow very relevant, but I identified a clear domain limitation because it targets Python rather than embedded C.
 - **Connection to my project:** I will adapt its coverage-guided loop, but I need to add embedded-specific context such as HAL calls, mocks, stubs, interrupts, and hardware-dependent setup.
 
 #### Panta - Gu, Nashid, and Mesbah (2026)
-- **Citation:** S. Gu, N. Nashid, and A. Mesbah, "LLM Test Generation via Iterative Hybrid Program Analysis," in *Proceedings of the 48th IEEE/ACM International Conference on Software Engineering*, 2026, doi: [10.1145/3744916.3764553](https://doi.org/10.1145/3744916.3764553).
+- **Citation:** S. Gu, N. Nashid, and A. Mesbah, "LLM Test Generation via Iterative Hybrid Program Analysis," in **Proceedings of the 48th IEEE/ACM International Conference on Software Engineering**, 2026, doi: [10.1145/3744916.3764553](https://doi.org/10.1145/3744916.3764553).
 - **Why I selected it:** I selected Panta because it combines static control-flow analysis with dynamic coverage feedback, which is relevant to explaining uncovered branches and paths.
 - **Strengths and limitations I noted:** I found the path-oriented approach useful, but I identified that the evaluation is Java-based and does not include embedded hardware constraints.
 - **Connection to my project:** I will use this to justify giving the AI branch predicates, path context, coverage data, and HAL/mock information rather than only source code.
 
 #### TELPA / Advancing Code Coverage - Yang et al. (2026)
-- **Citation:** C. Yang, J. Chen, B. Lin, Z. Wang, and J. Zhou, "Advancing Code Coverage: Incorporating Program Analysis with Large Language Models," *ACM Transactions on Software Engineering and Methodology*, vol. 35, no. 5, Art. 118, pp. 1-31, 2026, doi: [10.1145/3748505](https://doi.org/10.1145/3748505).
+- **Citation:** C. Yang, J. Chen, B. Lin, Z. Wang, and J. Zhou, "Advancing Code Coverage: Incorporating Program Analysis with Large Language Models," **ACM Transactions on Software Engineering and Methodology**, vol. 35, no. 5, Art. 118, pp. 1-31, 2026, doi: [10.1145/3748505](https://doi.org/10.1145/3748505).
 - **Why I selected it:** I selected TELPA because it focuses on hard-to-cover branches and uses program analysis to prepare better LLM prompts.
 - **Strengths and limitations I noted:** I found its context-selection idea strong, but I identified that its Python/object-construction setting must be translated carefully for C.
 - **Connection to my project:** I will use the idea of a focused "coverage-gap packet" containing source, predicate, calls, coverage status, and embedded environment assumptions.
 
 #### Automated Unit Test Improvement at Meta - Alshahwan et al. (2024)
-- **Citation:** N. Alshahwan *et al.*, "Automated Unit Test Improvement using Large Language Models at Meta," in *Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering*, pp. 185-196, 2024, doi: [10.1145/3663529.3663839](https://doi.org/10.1145/3663529.3663839).
+- **Citation:** N. Alshahwan **et al.**, "Automated Unit Test Improvement using Large Language Models at Meta," in **Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering**, pp. 185-196, 2024, doi: [10.1145/3663529.3663839](https://doi.org/10.1145/3663529.3663839).
 - **Why I selected it:** I selected this paper because it reports an industrial LLM-based test-improvement workflow with validation gates.
 - **Strengths and limitations I noted:** I found the build/pass/reliability/coverage filters very useful, but I identified that the work is Kotlin/Android rather than embedded C.
 - **Connection to my project:** I will use this paper to shape my acceptance criteria: an AI suggestion must compile, run, pass reliably, improve coverage, and survive human review.
 
 #### MUTGEN - Wang et al. (2026)
-- **Citation:** G. Wang, Q. Xu, L. C. Briand, and K. Liu, "Mutation-Guided Unit Test Generation with a Large Language Model," *IEEE Transactions on Software Engineering*, 2026, doi: [10.1109/TSE.2026.3682975](https://doi.org/10.1109/TSE.2026.3682975).
+- **Citation:** G. Wang, Q. Xu, L. C. Briand, and K. Liu, "Mutation-Guided Unit Test Generation with a Large Language Model," **IEEE Transactions on Software Engineering**, 2026, doi: [10.1109/TSE.2026.3682975](https://doi.org/10.1109/TSE.2026.3682975).
 - **Why I selected it:** I selected MUTGEN because it uses mutation feedback rather than relying only on raw coverage.
 - **Strengths and limitations I noted:** I found the feedback-guided LLM process relevant, but I identified that the Java/JUnit setting may not transfer directly to embedded C.
 - **Connection to my project:** I will use it to justify evaluating whether AI-generated coverage improvements are meaningful rather than merely numerical.
 
 #### Coverage Is Not Strongly Correlated with Test Suite Effectiveness - Inozemtseva and Holmes (2014)
-- **Citation:** L. Inozemtseva and R. Holmes, "Coverage Is Not Strongly Correlated with Test Suite Effectiveness," in *Proceedings of the 36th International Conference on Software Engineering*, pp. 435-445, 2014, doi: [10.1145/2568225.2568271](https://doi.org/10.1145/2568225.2568271).
+- **Citation:** L. Inozemtseva and R. Holmes, "Coverage Is Not Strongly Correlated with Test Suite Effectiveness," in **Proceedings of the 36th International Conference on Software Engineering**, pp. 435-445, 2014, doi: [10.1145/2568225.2568271](https://doi.org/10.1145/2568225.2568271).
 - **Why I selected it:** I selected this paper as a caution against treating coverage as a direct proxy for test quality.
 - **Strengths and limitations I noted:** I found its warning methodologically important, although it studies Java systems rather than embedded C.
 - **Connection to my project:** I will use it to justify pairing coverage deltas with human judgement about correctness, useful assertions, and mock validity.
 
 #### Zhao, Zhou, and Cohen (2026)
-- **Citation:** J. Zhao, S. Zhou, and E. Cohen, "Do Coverage and Mutation Scores of LLM-Generated Test Suites Correlate with Their Effectiveness? A Replicability Study," *Proceedings of the ACM on Software Engineering*, vol. 3, ISSTA, Art. ISSTA002, 2026. Available: [https://arxiv.org/abs/2607.22880](https://arxiv.org/abs/2607.22880). DOI metadata to be rechecked before final submission.
+- **Citation:** J. Zhao, S. Zhou, and E. Cohen, "Do Coverage and Mutation Scores of LLM-Generated Test Suites Correlate with Their Effectiveness? A Replicability Study," **Proceedings of the ACM on Software Engineering**, vol. 3, ISSTA, Art. ISSTA002, 2026. Available: [https://arxiv.org/abs/2607.22880](https://arxiv.org/abs/2607.22880). DOI metadata to be rechecked before final submission.
 - **Why I selected it:** I selected this paper because it revisits coverage and mutation scores specifically for LLM-generated tests.
 - **Strengths and limitations I noted:** I found it directly relevant to my evaluation design, but I identified that it is very recent and not embedded C.
 - **Connection to my project:** I will use it to support a two-layer evaluation: metric change first, then human validation of whether the test is realistic, executable, maintainable, and meaningful.
 
 #### Garousi et al. (2018)
-- **Citation:** V. Garousi, M. Felderer, C. M. Karapicak, and U. Yilmaz, "Testing Embedded Software: A Survey of the Literature," *Information and Software Technology*, vol. 104, pp. 14-45, 2018, doi: [10.1016/j.infsof.2018.06.016](https://doi.org/10.1016/j.infsof.2018.06.016).
+- **Citation:** V. Garousi, M. Felderer, C. M. Karapicak, and U. Yilmaz, "Testing Embedded Software: A Survey of the Literature," **Information and Software Technology**, vol. 104, pp. 14-45, 2018, doi: [10.1016/j.infsof.2018.06.016](https://doi.org/10.1016/j.infsof.2018.06.016).
 - **Why I selected it:** I selected this survey as my domain anchor for embedded-software testing.
 - **Strengths and limitations I noted:** I found its taxonomy useful for embedded testing constraints, but I identified that it predates modern LLM coding assistants.
 - **Connection to my project:** I will use it to justify treating hardware abstraction, mocks, stubs, simulations, and test artefacts as first-class parts of the AI prompt context.
 
 #### SmartUnit - Zhang et al. (2018)
-- **Citation:** C. Zhang, Y. Yan, H. Zhou, Y. Yao, K. Wu, T. Su, W. Miao, and G. Pu, "SmartUnit: Empirical Evaluations for Automated Unit Testing of Embedded Software in Industry," in *Proceedings of the 40th International Conference on Software Engineering: Software Engineering in Practice*, pp. 296-305, 2018, doi: [10.1145/3183519.3183554](https://doi.org/10.1145/3183519.3183554).
+- **Citation:** C. Zhang, Y. Yan, H. Zhou, Y. Yao, K. Wu, T. Su, W. Miao, and G. Pu, "SmartUnit: Empirical Evaluations for Automated Unit Testing of Embedded Software in Industry," in **Proceedings of the 40th International Conference on Software Engineering: Software Engineering in Practice**, pp. 296-305, 2018, doi: [10.1145/3183519.3183554](https://doi.org/10.1145/3183519.3183554).
 - **Why I selected it:** I selected SmartUnit because it is a strong embedded-software testing paper with industrial evaluation and coverage-oriented unit-test generation.
 - **Strengths and limitations I noted:** I found it useful as a non-LLM baseline, but I identified that it does not focus on natural-language explanation or human-facing diagnosis.
 - **Connection to my project:** I will use it to avoid claiming that AI is the first automation approach for embedded testing; my novelty is explanation and reviewable recommendations.
 
 #### CTGEN - Mangels and Peleska (2012)
-- **Citation:** T. Mangels and J. Peleska, "CTGEN - A Unit Test Generator for C," *Electronic Proceedings in Theoretical Computer Science*, vol. 102, pp. 88-102, 2012, doi: [10.4204/EPTCS.102.9](https://doi.org/10.4204/EPTCS.102.9).
+- **Citation:** T. Mangels and J. Peleska, "CTGEN - A Unit Test Generator for C," **Electronic Proceedings in Theoretical Computer Science**, vol. 102, pp. 88-102, 2012, doi: [10.4204/EPTCS.102.9](https://doi.org/10.4204/EPTCS.102.9).
 - **Why I selected it:** I selected CTGEN because it is directly about C unit-test generation and explicitly discusses stubs and low-level C issues.
 - **Strengths and limitations I noted:** I found its treatment of stubs and C constraints very relevant, but I identified that it is not LLM-based and may require specifications or assertions.
 - **Connection to my project:** I will use it to justify making mock/stub recommendation a central part of the AI-assisted workflow.
@@ -117,31 +117,31 @@ I selected the following literature because it helps me understand the main part
 After completing the first focused review of ten papers, I extended the core literature set in Week 6 by promoting five of the most relevant sources from my screened background pool. I chose these because they strengthen the parts of the research gap concerned with path-aware prompting, static/program analysis, coverage plateaus, and iterative validation of generated tests.
 
 #### SymPrompt - Ryan et al. (2024)
-- **Citation:** G. Ryan, S. Jain, M. Shang, S. Wang, X. Ma, M. K. Ramanathan, and B. Ray, "Code-Aware Prompting: A Study of Coverage-Guided Test Generation in Regression Setting using LLM," *Proceedings of the ACM on Software Engineering*, vol. 1, FSE, pp. 951-971, 2024, doi: [10.1145/3643769](https://doi.org/10.1145/3643769).
+- **Citation:** G. Ryan, S. Jain, M. Shang, S. Wang, X. Ma, M. K. Ramanathan, and B. Ray, "Code-Aware Prompting: A Study of Coverage-Guided Test Generation in Regression Setting using LLM," **Proceedings of the ACM on Software Engineering**, vol. 1, FSE, pp. 951-971, 2024, doi: [10.1145/3643769](https://doi.org/10.1145/3643769).
 - **Why I selected it:** I promoted SymPrompt from my background pool because it directly investigates how execution-path-aware prompting can guide an LLM toward code that is difficult to cover.
 - **Strengths and limitations I noted:** I found its multi-stage prompting strategy useful because it breaks test generation into smaller path-oriented tasks and provides relevant type and dependency context. Its main limitation for my work is that it is evaluated on Python rather than embedded C and does not have to deal with HAL calls, interrupts, or peripheral state.
 - **Connection to my project:** I will use SymPrompt to justify structuring an AI prompt around a specific uncovered path or branch rather than asking generally for more tests. In my setting, I can extend that context with embedded-specific information such as mocks, stubs, hardware assumptions, and branch conditions.
 
 #### HITS - Wang et al. (2024)
-- **Citation:** Z. Wang, K. Liu, G. Li, and Z. Jin, "HITS: High-coverage LLM-based Unit Test Generation via Method Slicing," in *Proceedings of the 39th IEEE/ACM International Conference on Automated Software Engineering*, pp. 1258-1268, 2024, doi: [10.1145/3691620.3695501](https://doi.org/10.1145/3691620.3695501).
+- **Citation:** Z. Wang, K. Liu, G. Li, and Z. Jin, "HITS: High-coverage LLM-based Unit Test Generation via Method Slicing," in **Proceedings of the 39th IEEE/ACM International Conference on Automated Software Engineering**, pp. 1258-1268, 2024, doi: [10.1145/3691620.3695501](https://doi.org/10.1145/3691620.3695501).
 - **Why I selected it:** I selected HITS because it targets complex methods where whole-method prompting leaves conditions and branches uncovered, which is closely related to the type of coverage gap I want to diagnose.
 - **Strengths and limitations I noted:** I found method slicing to be a strong way of reducing the amount of logic the model must reason about at once, and the paper evaluates both line and branch coverage. However, the work is Java-focused and still assumes a conventional unit-testing environment rather than hardware-dependent embedded C.
 - **Connection to my project:** I will use HITS as support for decomposing a difficult embedded function or uncovered branch into a smaller analysis target. This may be especially useful where one function mixes normal logic with peripheral calls, error paths, or hardware-dependent conditions.
 
 #### Static Program Analysis Guided LLM Based Unit Test Generation - Roy Chowdhury et al. (2024)
-- **Citation:** S. Roy Chowdhury, G. Sridhara, A. K. Raghavan, J. Bose, S. Mazumdar, H. Singh, S. B. Sugumaran, and R. Britto, "Static Program Analysis Guided LLM Based Unit Test Generation," in *Proceedings of the 8th International Conference on Data Science and Management of Data (12th ACM IKDD CODS and 30th COMAD)*, pp. 279-283, 2024, doi: [10.1145/3703323.3703742](https://doi.org/10.1145/3703323.3703742).
+- **Citation:** S. Roy Chowdhury, G. Sridhara, A. K. Raghavan, J. Bose, S. Mazumdar, H. Singh, S. B. Sugumaran, and R. Britto, "Static Program Analysis Guided LLM Based Unit Test Generation," in **Proceedings of the 8th International Conference on Data Science and Management of Data (12th ACM IKDD CODS and 30th COMAD)**, pp. 279-283, 2024, doi: [10.1145/3703323.3703742](https://doi.org/10.1145/3703323.3703742).
 - **Why I selected it:** I selected this paper because it directly studies whether concise context extracted through static program analysis can improve LLM-generated unit tests without simply placing an entire class into the prompt.
 - **Strengths and limitations I noted:** I found the emphasis on concise and precise program-analysis context particularly relevant to my proposed workflow, and the approach was evaluated on both a commercial and an open-source Java project. The limitation is again the language and execution domain: it does not evaluate embedded C or hardware-abstraction dependencies.
 - **Connection to my project:** I will use this paper to support the design of a compact coverage-gap input containing only the code, dependencies, control-flow information, and environment details needed to explain a particular uncovered region. This could help avoid giving the AI an unnecessarily large embedded codebase.
 
 #### CodaMOSA - Lemieux et al. (2023)
-- **Citation:** C. Lemieux, J. P. Inala, S. K. Lahiri, and S. Sen, "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-trained Large Language Models," in *Proceedings of the 45th IEEE/ACM International Conference on Software Engineering*, pp. 919-931, 2023, doi: [10.1109/ICSE48619.2023.00085](https://doi.org/10.1109/ICSE48619.2023.00085).
+- **Citation:** C. Lemieux, J. P. Inala, S. K. Lahiri, and S. Sen, "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-trained Large Language Models," in **Proceedings of the 45th IEEE/ACM International Conference on Software Engineering**, pp. 919-931, 2023, doi: [10.1109/ICSE48619.2023.00085](https://doi.org/10.1109/ICSE48619.2023.00085).
 - **Why I selected it:** I selected CodaMOSA because it examines a problem very close to my motivation: automated testing can reach a coverage plateau where conventional search struggles to discover inputs that exercise new behaviour, and an LLM can be introduced to help escape that plateau.
 - **Strengths and limitations I noted:** I found the hybrid design valuable because it does not treat the LLM as a replacement for established automated testing; instead, the LLM is used when the search process stops making progress. However, its evaluation is based on Python test generation and search-based testing rather than embedded C coverage analysis.
 - **Connection to my project:** I will use CodaMOSA to support the idea that AI may be most useful at the point where an existing coverage workflow has already identified what remains uncovered. My study similarly places AI after conventional coverage analysis rather than asking it to replace the coverage tool itself.
 
 #### ChatUniTest - Chen et al. (2024)
-- **Citation:** Y. Chen, Z. Hu, C. Zhi, J. Han, S. Deng, and J. Yin, "ChatUniTest: A Framework for LLM-Based Test Generation," in *Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering*, pp. 572-576, 2024, doi: [10.1145/3663529.3663801](https://doi.org/10.1145/3663529.3663801).
+- **Citation:** Y. Chen, Z. Hu, C. Zhi, J. Han, S. Deng, and J. Yin, "ChatUniTest: A Framework for LLM-Based Test Generation," in **Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering**, pp. 572-576, 2024, doi: [10.1145/3663529.3663801](https://doi.org/10.1145/3663529.3663801).
 - **Why I selected it:** I selected ChatUniTest because it combines context selection with a generation-validation-repair loop, which is important for a project where AI-generated test suggestions cannot simply be accepted as correct.
 - **Strengths and limitations I noted:** I found its adaptive focal-context and repair mechanisms useful because they explicitly address incorrect generated tests rather than only measuring generation success. Its main limitation is that it targets Java projects and does not consider the additional validation problems created by embedded hardware and mocked peripherals.
 - **Connection to my project:** I will use ChatUniTest to support an iterative workflow in which an AI suggestion is compiled, executed, checked against coverage, and either rejected or refined. In my project I will keep the human validation step explicit, particularly for mocks, stubs, and hardware-dependent assumptions.
@@ -188,6 +188,7 @@ I will record any use of AI or other digital research tools that affects my lite
 - **Exact prompt/input used:** `For my masters thesis, I want to explore the idea of using an LLM to assist in the code coverage process. Particularly in providing a feedback loop at the end of a static coverage analysis that includes suggested fixes/implementations for uncovered code. As a starting point I need you to find me some solid, reliable literature on Google Scholar that I can go through myself and verify whether or not they are relevant. Ensure any and all sources and links are included for me.`
 
 - **How I critically evaluated or modified the output:** Because I had started the notebook later than I should have, I used ChatGPT (5.5) to create an initial candidate source list and a first-pass notebook structure quickly rather than pretending I had built it slowly over several weeks. I then checked titles, authors, publication venues, years, page ranges, and DOI or arXiv records against publisher, conference, institutional, or bibliographic sources. I was surprised by how relevant the initial list was after review, but I still removed or downgraded material that did not directly support my study. I am now going through the sources one by one, checking their relevance in more detail, and revising the notebook as I complete that review.
+
 ---
 ## 4. Weekly Activity & Reflection Logs
 
@@ -227,4 +228,15 @@ I will record any use of AI or other digital research tools that affects my lite
 
 - **Reflection on Progress:** The introduction is now much closer to the required structure. The context, literature review, research gap, primary research question, high-level methodology, intended contribution, and roadmap are all represented. The main remaining practical issue is the strict two-page limit including references, so I need to compile the full draft before deciding whether any part should be expanded or tightened.
 
-- **Plan for Next Step:** I will compile the current version with the full bibliography, check that every citation resolves correctly, and see how much of the two-page IEEE limit is being used. I will then make a final editing pass focused on concision, repetition, and making sure the research objective and questions are stated clearly without using unnecessary space.
+
+
+- **19/08/2026 - Minor Structural and Wording Refinement:** I made a small editing pass on the introduction rather than adding more literature or changing the research direction. I tightened some wording in the opening and literature-review paragraphs, changed a few phrases that read more naturally to me, and split the long research-gap/method paragraph into two shorter paragraphs. The first now finishes on the research question, while the second describes the baseline coverage, AI-assisted analysis, manual validation, and intended contribution. I made this change because the previous version was carrying too many separate ideas in one paragraph and the revised structure makes the progression easier for me to follow. I also shortened the roadmap opening from "the remainder of the proposed paper" to "the remainder of the paper" because it sounded cleaner. These were presentation changes only: the research question, method, argument, and existing citations remain unchanged.
+
+
+- **19/08/2026 - Full Introduction Expansion to the Two-Page Target:** Following the previous plan, I expanded the introduction rather than changing its overall structure or research direction. I developed the opening discussion of embedded-C coverage challenges, particularly the idea that an uncovered branch may depend on peripheral state, hardware abstractions, mocks, stubs, or setup conditions rather than simply needing another input. I also expanded the literature synthesis so that the reviewed papers are compared more clearly by what they contribute to the proposed workflow: coverage and path feedback identify the target, program analysis and slicing help select the relevant context, and validation is needed to decide whether an AI-generated suggestion is actually usable.
+
+- **How the contribution has developed:** I made the distinction between coverage improvement and practical usefulness more explicit. The introduction now explains that an AI suggestion should not be treated as successful purely because it reaches new code. It should also compile, execute, make reasonable assumptions about the embedded environment, and survive human review. I also separated the value of the AI's explanation from the value of the generated test/mock/stub, since an explanation of why a branch is unreachable may still be useful even if the concrete generated code is rejected.
+
+- **Current Status and Remaining Work:** The introduction is now much closer to a complete two-page manuscript and contains the full context, literature synthesis, research gap, research question, proposed methodology, contribution, and roadmap required by the brief. I have deliberately not treated this as the final version. There is still refactoring and reviewing to do, particularly around sentence length, repetition, the balance between the literature and contribution paragraphs, and whether every claim is supported as clearly as it should be. I also need to compile the final source against the real bibliography rather than an approximate reference footprint and verify the exact two-page limit.
+
+- **Plan for Next Step:** I will now carry out a final refactoring and review pass rather than adding  new material. I will compile the paper with the complete `references.bib`, confirm that every citation resolves and that the paper remains exactly two pages long. 

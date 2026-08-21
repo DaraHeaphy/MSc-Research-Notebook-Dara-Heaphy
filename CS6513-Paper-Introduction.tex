@@ -3,23 +3,11 @@
 % when deciding on the initial layout and structure of this file.
 % NB ** Final paper must use the IEEE conference format and be exactly 2 pages.
 
-
-
-
 \documentclass[conference]{IEEEtran}
-
-
-
 
 \usepackage{cite}
 
-
-
-
 \title{Closing the Coverage Gap with AI: AI-Assisted Code Coverage Management for Embedded C Software}
-
-
-
 
 \author{
 \IEEEauthorblockN{Dara Heaphy}
@@ -29,45 +17,34 @@ Limerick, Ireland
 }
 }
 
-
-
-
 \begin{document}
-
-
-
 
 \maketitle
 
-
-
-
 \section{Introduction}
-
-
-
 
 % Going to start broad here.
 % Briefly introduce embedded software testing, code coverage,
 % and why improving coverage feedback could be useful.
 
-
-
-Embedded software is used in systems where reliable behaviour is often
-important, which makes testing a major part of the development process.
-Code coverage is commonly used to show which parts of a program have or
-have not been exercised by a test suite, but a coverage report on its own
-does not explain why code remains uncovered or what should be done next.
-This can be particularly difficult in embedded C, where hardware
-dependencies, peripheral interactions, timing behaviour, and the need for
-mocks or stubs can make certain paths harder to test \cite{garousi2018}.
-With large language models now being explored for software testing and test
-generation, there may be an opportunity to make this part of the coverage
-process more useful by using AI to help explain uncovered code and suggest
-possible ways of exercising it.
-
-
-
+Embedded software is often used in systems where reliable behaviour is
+important, making testing a major part of the development process. Code
+coverage is commonly used to show which parts of a program have or have not
+been exercised by a test suite, but a coverage report on its own does not
+explain why code remains uncovered or what should be done next. This can be
+particularly difficult in embedded C, where hardware dependencies, peripheral
+interactions, timing behaviour, and the need for mocks or stubs can make
+certain paths harder to test \cite{garousi2018}. These constraints mean that an
+uncovered branch is not always solved by simply adding another input: the test
+may first need a particular peripheral state, a replacement for a hardware
+interface, or a sequence of setup conditions that is difficult to reproduce in
+a host-based test environment. As a result, the useful question is not only
+which code is uncovered, but why it is uncovered and what practical change to
+the test environment could make it executable. With large language models now
+being explored for software testing and test generation, there is an
+opportunity to investigate whether AI can make this part of the coverage
+process more useful by helping to interpret coverage gaps and suggest ways of
+exercising them.
 
 % Mini literature review.
 % I want to group the papers by idea rather than go through them one by one.
@@ -77,87 +54,140 @@ possible ways of exercising it.
 % - static/program analysis
 % - embedded C testing, mocks and stubs
 
-
-
 Recent work such as CoverUp, Panta, and SymPrompt has shown that LLM-based
 test generation can be improved by using coverage feedback, program analysis,
-and path-specific context \cite{pizzorno2025,gu2026,ryan2024}. However, these
-approaches are mainly evaluated outside embedded C. Existing embedded testing
-work such as SmartUnit and CTGEN already deals with automated testing, C code,
-and the use of stubs \cite{zhang2018,mangels2012}, but does not focus on using
-AI to explain unresolved coverage gaps and suggest practical tests, mocks, or
-stubs.
+and path-specific context \cite{pizzorno2025,gu2026,ryan2024}. Although the
+individual techniques differ, they share the idea that the model should not be
+asked to generate tests blindly. Coverage can identify a specific target,
+while control-flow or execution-path information can narrow the reasoning task
+to the conditions that must be satisfied to reach it. This is useful for the
+present study because an embedded coverage report already provides a natural
+starting point: rather than asking an AI model to produce a complete new test
+suite, the model can be directed toward a particular unresolved branch,
+function, or line. However, these approaches have mainly been evaluated outside
+embedded C, so they do not directly address the extra setup and environment
+constraints created by hardware-dependent code.
 
+Existing embedded testing work provides the other side of this problem.
+SmartUnit demonstrates automated unit-testing techniques for embedded software,
+while CTGEN addresses C test generation and the use of stubs for code that
+cannot be exercised directly \cite{zhang2018,mangels2012}. This shows that
+automation, coverage improvement, and dependency replacement are not new ideas
+in embedded testing. The potential role of an LLM is therefore not to replace
+established coverage tools or conventional test-generation techniques, but to
+add an explanatory and recommendation step after those tools have identified
+what remains uncovered. In this position, the model could reason about why a
+target is difficult to reach and suggest a test case, mock, stub, or setup
+change for human review.
 
-A recurring theme across the more recent work is that LLM-based test
-generation becomes more useful when the model is given focused information
-about the code that remains difficult to cover. HITS uses method slicing to
-reduce complex testing problems into smaller targets, while static-analysis
-guided approaches provide selected dependency and program information rather
-than an entire codebase \cite{wang2024hits,chowdhury2024}. CodaMOSA similarly
-introduces an LLM when conventional automated test generation reaches a
-coverage plateau, and ChatUniTest combines generation with validation and
-repair of unsuccessful tests \cite{lemieux2023,chen2024}. Together, these
-approaches suggest that an embedded-C assistant should analyse a specific
-uncovered region using relevant branch conditions, dependencies, existing
-tests, and hardware-abstraction information instead of simply being asked to
-generate additional tests from the source code alone.
+A recurring theme across the more recent work is that this type of assistance
+becomes more useful when the model is given focused information about the code
+that remains difficult to cover. HITS uses method slicing to reduce complex
+testing problems into smaller targets, while static-analysis-guided approaches
+provide selected dependency and program information rather than an entire
+codebase \cite{wang2024hits,chowdhury2024}. CodaMOSA similarly introduces an
+LLM when conventional automated test generation reaches a coverage plateau,
+and ChatUniTest combines generation with validation and repair of unsuccessful
+tests \cite{lemieux2023,chen2024}. Taken together, these approaches suggest two
+important design choices for an embedded-C workflow. First, the AI should be
+invoked for a specific uncovered region instead of being given an unrestricted
+generation task. Second, its output should remain inside an iterative
+validation loop, because a plausible-looking test is not useful if it does not
+compile, execute, or interact correctly with the mocked hardware environment.
+For an embedded target, the focused input could therefore include the uncovered
+branch or function, relevant predicates and dependencies, existing tests, and
+available hardware-abstraction or stub information.
 
+These strands of work also differ in what they treat as a successful result. A
+coverage increase is useful because it shows that previously unexecuted code has
+been reached, but it does not by itself show that the new test is meaningful or
+that the behaviour has been checked effectively \cite{inozemtseva2014}. This is
+particularly relevant to AI-generated suggestions, where syntactically plausible
+code may still contain incorrect assumptions about dependencies or the execution
+environment. ChatUniTest's validation-and-repair loop illustrates the importance
+of checking generated tests after creation \cite{chen2024}, while the embedded
+literature makes the realism of stubs and hardware abstractions an additional
+concern \cite{garousi2018,mangels2012}. For this study, coverage is therefore
+treated as one outcome of the feedback process rather than the only definition
+of success. An AI recommendation that increases coverage through an unrealistic
+stub or invalid hardware assumption would not be considered as useful as one
+that can be compiled, executed, and justified within the intended test
+environment.
 
-
+An additional reason to separate coverage-gap explanation from test generation
+is that the explanation may still be useful even when a generated test cannot be
+used directly. For example, identifying that an uncovered branch depends on a
+particular peripheral response or an unmodelled callback can give a developer a
+clearer next step even if the model's proposed stub is rejected. This makes the
+feedback stage different from approaches that judge success mainly by whether a
+new test is produced. The proposed workflow will therefore record both parts of
+the response: the model's diagnosis of the uncovered region and the concrete
+change it recommends. Keeping these outputs separate should make it possible to
+distinguish between several outcomes, such as a correct explanation paired with
+an unusable test, a feasible test based on a weak explanation, or a suggestion
+that fails at both stages. This is especially relevant in embedded C because the
+model may not have direct knowledge of the physical hardware state represented
+by an abstraction layer. Human review is therefore part of the method rather
+than an afterthought, and the usefulness of the assistant will be judged by how
+well its reasoning and recommendations survive that review.
 
 % Research gap.
 % The main idea at the moment is that most LLM testing work is not focused
 % on embedded C, while embedded testing research does not really look at
 % AI-assisted explanation of coverage gaps and suggested tests/mocks/stubs.
 
-
-This leaves a more specific gap between current LLM-based testing research
-and established embedded-software testing techniques. Embedded testing
-research already recognises the importance of hardware dependencies,
-abstraction layers, stubs, and other constraints that affect whether code can
-be exercised realistically \cite{garousi2018,zhang2018,mangels2012}, but these
-issues have not been the main focus of the LLM approaches reviewed here. This
-study therefore asks to what extent AI-assisted coverage analysis can improve
+This leaves a more specific gap between current LLM-based testing research and
+established embedded-software testing techniques. Embedded testing research
+already recognises the importance of hardware dependencies, abstraction layers,
+stubs, and other constraints that affect whether code can be exercised
+realistically \cite{garousi2018,zhang2018,mangels2012}, but these issues have
+not been the main focus of the LLM approaches reviewed here. Conversely, the
+LLM literature provides increasingly targeted methods for finding and reaching
+difficult code, but there is limited evidence about whether those methods remain
+useful when the uncovered logic depends on embedded-specific environment
+assumptions. The gap is therefore not simply whether an LLM can generate more
+tests, but whether AI-assisted analysis can turn an existing embedded-C
+coverage result into a technically useful explanation and a feasible next
+step. This study asks: to what extent can AI-assisted coverage analysis improve
 the identification, explanation, and reduction of coverage gaps in embedded C
-software. Baseline line, branch, and function coverage will first be collected,
-after which selected uncovered regions will be provided to an AI model together
-with relevant source and environment context. Suggested tests, mocks, or stubs
-will then be manually reviewed, compiled, executed, and compared against the
-baseline, with technical correctness and usefulness considered alongside any
-increase in coverage \cite{inozemtseva2014}. The intended contribution of this
-study is an evaluation of whether an AI-assisted feedback step can make
-embedded-C coverage reports more actionable, including evidence about the
-technical correctness and practical usefulness of suggested tests, mocks, and
-stubs.
-
-
-
+software?
 
 % My contribution.
-% Explain the main research question and briefly describe the approach:
+% Explaining the main research question and briefly describing the approach:
 % baseline coverage -> AI analysis -> review suggestions -> run selected
 % changes -> compare coverage and assess whether the suggestions were useful.
 
+To investigate this question, baseline line, branch, and function coverage will
+first be collected for the selected embedded-C software. Uncovered regions will
+then be chosen as analysis targets and provided to an AI model together with
+relevant source and environment context. The model will be asked to explain the
+likely reason for the gap and propose a practical way of exercising the target,
+which may include a new test, a mock or stub, or an adjustment to test setup.
+The suggestions will not be accepted automatically: selected outputs will be
+manually reviewed, compiled, and executed before the resulting coverage is
+compared with the baseline. This distinction is important because increased
+coverage alone should not be treated as evidence of a better test suite
+\cite{inozemtseva2014}. The evaluation will therefore consider whether the
+suggestion is technically correct, executable, relevant to the uncovered code,
+and practically useful alongside any change in coverage. Failed or unrealistic
+recommendations will also be retained as evidence about where the approach
+breaks down, particularly when the target depends on hardware behaviour that
+cannot be represented adequately in the supplied context.
 
+The intended contribution is an evaluation of an AI-assisted feedback step
+positioned between conventional coverage reporting and developer action. Rather
+than proposing AI as a replacement for embedded testing infrastructure, the
+study will examine whether it can make existing coverage information more
+actionable by connecting an uncovered region to an explanation and a
+human-reviewable recommendation. This should provide evidence about both the
+potential benefit and the limitations of using AI for coverage-gap management
+in embedded C, with particular attention to the correctness and practicality
+of suggested tests, mocks, and stubs.
 
-
-% Finish with a short paper roadmap once the rest of the paper structure
-% is properly decided.
-
-
-The remainder of the proposed paper is structured as follows. Section II
-describes the AI-assisted coverage workflow and evaluation methodology,
-Section III presents the results, and Section IV discusses the findings,
-limitations, and conclusions.
-
-
-
+% Paper roadmap.
+The remainder of this paper presents the methodology, results, discussion, and conclusions in Sections II--V, respectively.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
-
-
-
 
 \end{document}
