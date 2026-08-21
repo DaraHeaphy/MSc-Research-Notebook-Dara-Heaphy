@@ -27,8 +27,8 @@ Limerick, Ireland
 % Briefly introduce embedded software testing, code coverage,
 % and why improving coverage feedback could be useful.
 
-Embedded software is often used in systems where reliable behaviour is
-important, making testing a major part of the development process. Code
+Embedded software is often deployed in systems where reliable behaviour is
+important, making testing a central part of the development process. Code
 coverage is commonly used to show which parts of a program have or have not
 been exercised by a test suite, but a coverage report on its own does not
 explain why code remains uncovered or what should be done next. This can be
@@ -38,9 +38,9 @@ certain paths harder to test \cite{garousi2018}. These constraints mean that an
 uncovered branch is not always solved by simply adding another input: the test
 may first need a particular peripheral state, a replacement for a hardware
 interface, or a sequence of setup conditions that is difficult to reproduce in
-a host-based test environment. As a result, the useful question is not only
-which code is uncovered, but why it is uncovered and what practical change to
-the test environment could make it executable. With large language models now
+a host-based test environment. As a result, the practical question is not only
+which code is uncovered, but why it is uncovered and what change to the test
+environment could make it executable. With large language models now
 being explored for software testing and test generation, there is an
 opportunity to investigate whether AI can make this part of the coverage
 process more useful by helping to interpret coverage gaps and suggest ways of
@@ -54,8 +54,8 @@ exercising them.
 % - static/program analysis
 % - embedded C testing, mocks and stubs
 
-Recent work such as CoverUp, Panta, and SymPrompt has shown that LLM-based
-test generation can be improved by using coverage feedback, program analysis,
+Recent approaches such as CoverUp, Panta, and SymPrompt show that LLM-based
+test generation can be improved through coverage feedback, program analysis,
 and path-specific context \cite{pizzorno2025,gu2026,ryan2024}. Although the
 individual techniques differ, they share the idea that the model should not be
 asked to generate tests blindly. Coverage can identify a specific target,
@@ -71,7 +71,7 @@ constraints created by hardware-dependent code.
 Existing embedded testing work provides the other side of this problem.
 SmartUnit demonstrates automated unit-testing techniques for embedded software,
 while CTGEN addresses C test generation and the use of stubs for code that
-cannot be exercised directly \cite{zhang2018,mangels2012}. This shows that
+cannot be exercised directly \cite{zhang2018,mangels2012}. Together, these studies show that
 automation, coverage improvement, and dependency replacement are not new ideas
 in embedded testing. The potential role of an LLM is therefore not to replace
 established coverage tools or conventional test-generation techniques, but to
@@ -80,9 +80,9 @@ what remains uncovered. In this position, the model could reason about why a
 target is difficult to reach and suggest a test case, mock, stub, or setup
 change for human review.
 
-A recurring theme across the more recent work is that this type of assistance
-becomes more useful when the model is given focused information about the code
-that remains difficult to cover. HITS uses method slicing to reduce complex
+A recurring theme in the recent literature is that this type of assistance
+becomes more useful when the model receives focused information about code that
+remains difficult to cover. HITS uses method slicing to reduce complex
 testing problems into smaller targets, while static-analysis-guided approaches
 provide selected dependency and program information rather than an entire
 codebase \cite{wang2024hits,chowdhury2024}. CodaMOSA similarly introduces an
@@ -114,22 +114,19 @@ stub or invalid hardware assumption would not be considered as useful as one
 that can be compiled, executed, and justified within the intended test
 environment.
 
-An additional reason to separate coverage-gap explanation from test generation
-is that the explanation may still be useful even when a generated test cannot be
-used directly. For example, identifying that an uncovered branch depends on a
-particular peripheral response or an unmodelled callback can give a developer a
-clearer next step even if the model's proposed stub is rejected. This makes the
-feedback stage different from approaches that judge success mainly by whether a
-new test is produced. The proposed workflow will therefore record both parts of
-the response: the model's diagnosis of the uncovered region and the concrete
-change it recommends. Keeping these outputs separate should make it possible to
-distinguish between several outcomes, such as a correct explanation paired with
-an unusable test, a feasible test based on a weak explanation, or a suggestion
-that fails at both stages. This is especially relevant in embedded C because the
-model may not have direct knowledge of the physical hardware state represented
-by an abstraction layer. Human review is therefore part of the method rather
-than an afterthought, and the usefulness of the assistant will be judged by how
-well its reasoning and recommendations survive that review.
+Separating coverage-gap explanation from test generation is also important
+because a useful explanation may remain valuable even when generated test code
+cannot be used directly. Identifying that an uncovered branch depends on a
+particular peripheral response or an unmodelled callback can still give a
+developer a clearer next step even if the proposed stub is rejected. The
+workflow will therefore record the model's diagnosis and its concrete
+recommendation separately, allowing outcomes such as a correct explanation
+paired with an unusable test, a feasible test based on weak reasoning, or a
+suggestion that fails at both stages. This distinction is especially relevant
+in embedded C, where the model may not know the physical hardware state
+represented by an abstraction layer. Human review is therefore part of the
+method, and the usefulness of the assistant will depend on how well both its
+reasoning and recommendations survive that review.
 
 % Research gap.
 % The main idea at the moment is that most LLM testing work is not focused
@@ -158,7 +155,7 @@ software?
 % changes -> compare coverage and assess whether the suggestions were useful.
 
 To investigate this question, baseline line, branch, and function coverage will
-first be collected for the selected embedded-C software. Uncovered regions will
+be collected for the selected embedded-C software. Uncovered regions will
 then be chosen as analysis targets and provided to an AI model together with
 relevant source and environment context. The model will be asked to explain the
 likely reason for the gap and propose a practical way of exercising the target,
@@ -180,7 +177,7 @@ than proposing AI as a replacement for embedded testing infrastructure, the
 study will examine whether it can make existing coverage information more
 actionable by connecting an uncovered region to an explanation and a
 human-reviewable recommendation. This should provide evidence about both the
-potential benefit and the limitations of using AI for coverage-gap management
+potential benefits and limitations of using AI for coverage-gap management
 in embedded C, with particular attention to the correctness and practicality
 of suggested tests, mocks, and stubs.
 
